@@ -50,12 +50,13 @@ class gamesController {
         $this->view->response($game, 200);
     }
     public function filter($req, $res){
-        $price = $req->query->precio;
-        if(!$price){
-            return $this->view->response('no hay ningun valor asignado', 400);
+        $criterio = $req->query->criterio;
+        $valor = $req->query->valor;
+        if(!$criterio || $valor){
+            return $this->view->response('falta asignarle un valor a las querys', 400);
         }
 
-        $games = $this->model->filter($price);
+        $games = $this->model->filter($criterio, $valor);
 
         if(!$games){
             return $this->view->response('No existen juegos con el filtro seleccionado', 404);

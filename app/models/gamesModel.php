@@ -29,9 +29,24 @@ class gamesModel extends model {
 
         return $query->fetch(PDO::FETCH_OBJ);
     }
-    public function filter($price){
+    public function filter($criterio, $valor){
         
-        $query = $this->db->prepare("SELECT * FROM juegos WHERE precio > ?");
-        $query->execute([$price]);
+        $sql = 'SELECT * FROM juegos WHERE ';
+
+        switch($criterio){
+            case'mayor':
+                $sql .= '> ?';
+                break;
+            case'menor':
+                $sql .= '< ?';
+                break;
+            case'igual':
+                $sql .= '= ?';
+                break;
+        }
+        $query = $this->db->prepare($sql);
+        $query->execute([$valor]);
+
+        return $query->fetchAll(PDO::FETCH_OBJ);
     }
 }
