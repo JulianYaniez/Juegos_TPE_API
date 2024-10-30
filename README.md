@@ -1,0 +1,1 @@
+en esta tercera entrega del TPE, convertiremos unas de las dos tablas (juegos) en una api.
