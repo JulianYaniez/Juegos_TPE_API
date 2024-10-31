@@ -24,6 +24,9 @@ class gamesController {
             }
             return $this->view->response($game, 200);
         }
+        if(isset($req->query->criterios) || isset($req->query->valor)){
+            return $this->filter($req, $res);
+        }
         $games = $this->model->getGames();
         return $this->view->response($games, 200);
     }
@@ -52,7 +55,7 @@ class gamesController {
     public function filter($req, $res){
         $criterio = $req->query->criterio;
         $valor = $req->query->valor;
-        if(!$criterio || $valor){
+        if(!$criterio || !$valor){
             return $this->view->response('falta asignarle un valor a las querys', 400);
         }
 
@@ -63,5 +66,5 @@ class gamesController {
         }
 
         $this->view->response($games, 200);
-    }
+    }   
 }

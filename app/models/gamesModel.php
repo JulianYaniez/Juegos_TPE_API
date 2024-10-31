@@ -31,7 +31,7 @@ class gamesModel extends model {
     }
     public function filter($criterio, $valor){
         
-        $sql = 'SELECT * FROM juegos WHERE ';
+        $sql = 'SELECT * FROM juegos WHERE precio ';
 
         switch($criterio){
             case'mayor':
