@@ -52,7 +52,7 @@ class gamesController {
         $game = $this->model->getGameById($id);
         $this->view->response($game, 200);
     }
-    public function filter($req, $res){
+    public function filter($req, $res) {
         $criterio = $req->query->criterio;
         $valor = $req->query->valor;
         if(!$criterio || !$valor){

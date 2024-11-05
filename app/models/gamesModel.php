@@ -31,17 +31,20 @@ class gamesModel extends model {
     }
     public function filter($criterio, $valor){
         
-        $sql = 'SELECT * FROM juegos WHERE precio ';
+        $sql = 'SELECT * FROM juegos WHERE ';
 
+        if($criterio == 'distribuidora'){
+            $sql .= 'id_distribuidora = ?';
+        }
         switch($criterio){
             case'mayor':
-                $sql .= '> ?';
+                $sql .= 'precio > ?';
                 break;
             case'menor':
-                $sql .= '< ?';
+                $sql .= 'precio < ?';
                 break;
             case'igual':
-                $sql .= '= ?';
+                $sql .= 'precio = ?';
                 break;
         }
         $query = $this->db->prepare($sql);
