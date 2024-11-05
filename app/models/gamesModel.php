@@ -9,9 +9,16 @@ class gamesModel extends model {
         parent::__construct();
     }
 
-    public function getGames(){
+    public function getGames($page, $limit){
+        $sql = "SELECT * FROM juegos";
 
-        $query = $this->db->prepare("SELECT * FROM juegos");
+        if($limit != NULL){
+            $sql .= ' LIMIT ' . $limit;
+        }
+        if($page != NULL){
+            $sql .= ' OFFSET ' . $page;
+        }
+        $query = $this->db->prepare($sql);
         $query->execute();
 
         return $query->fetchAll(PDO::FETCH_OBJ);

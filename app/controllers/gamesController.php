@@ -13,7 +13,9 @@ class gamesController {
     }
 
     public function getGames($req, $res){
-
+        $page = null;
+        $limit = null;
+        
         if(isset($req->params->id)){
             $id = $req->params->id;
 
@@ -27,7 +29,12 @@ class gamesController {
         if(isset($req->query->criterios) || isset($req->query->valor)){
             return $this->filter($req, $res);
         }
-        $games = $this->model->getGames();
+        if(isset($Req->query->pagina) || isset($req->query->limite)){
+            $page = $req->query->pagina;
+            $limit = $req->query->limite;
+            return $this->model->getGames($page, $limit);
+        }
+        $games = $this->model->getGames($page, $limit);
         return $this->view->response($games, 200);
     }
     public function updateGame($req, $res){
