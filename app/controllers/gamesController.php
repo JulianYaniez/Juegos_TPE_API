@@ -32,7 +32,12 @@ class gamesController {
         if(isset($Req->query->pagina) || isset($req->query->limite)){
             $page = $req->query->pagina;
             $limit = $req->query->limite;
-            return $this->model->getGames($page, $limit);
+            $games = $this->model->getGames($page, $limit);
+
+            if(!$games){
+                return $this->view->response('No hay juegos en la pagina y/o limite seleccionados', 404);
+            }
+            return $this->view->response($games, 200);
         }
         $games = $this->model->getGames($page, $limit);
         return $this->view->response($games, 200);
