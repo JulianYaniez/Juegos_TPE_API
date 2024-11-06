@@ -70,7 +70,7 @@ class gamesController {
         $game = $this->model->getGameById($id);
 
         if(!$game){
-            return $this->view->response("El juego con el id= $id no existe");
+            return $this->view->response("El juego con el id= $id no existe", 404);
         }
         return $this->model->deleteGame($id);
     }
