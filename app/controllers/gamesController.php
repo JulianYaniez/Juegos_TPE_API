@@ -64,6 +64,16 @@ class gamesController {
         $game = $this->model->getGameById($id);
         $this->view->response($game, 200);
     }
+    public function deleteGame($req, $res){
+        $id = $req->params->id;
+
+        $game = $this->model->getGameById($id);
+
+        if(!$game){
+            return $this->view->response("El juego con el id= $id no existe");
+        }
+        return $this->model->deleteGame($id);
+    }
     public function filter($req, $res) {
         $criterio = $req->query->criterio;
         $valor = $req->query->valor;
@@ -78,5 +88,5 @@ class gamesController {
         }
 
         $this->view->response($games, 200);
-    }   
+    }
 }
