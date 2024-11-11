@@ -15,6 +15,7 @@ $router = new router();
 $router->addRoute('juegos', 'GET', 'gamesController', 'getGames');
 $router->addRoute('juegos/:id', 'GET', 'gamesController', 'getGames');
 $router->addRoute('juegos/:id', 'DELETE', 'gamesController', 'deleteGame');
-$router->addRoute('juegos/:id', 'UPDATE', 'gamesController', 'updateGame');
+$router->addRoute('juegos', 'PUT', 'gamesController', 'createGame');
+$router->addRoute('juegos/:id', 'POST', 'gamesController', 'updateGame');
 
 $router->route($_GET['resource'], $_SERVER['REQUEST_METHOD']);

@@ -30,9 +30,14 @@ class gamesModel extends model {
 
         return $query->fetch(PDO::FETCH_OBJ);
     }
+    public function createGame($title, $genre, $distributor, $price, $date){
+        $query = $this->db->prepare("INSERT juegos SET id=?,titulo=?,genero=?,id_distribuidora=?,precio=?,fecha_salida=?");
+        $query->execute([$title, $genre, $distributor, $price, $date]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
     public function updateGame($id, $title, $genre, $distributor, $price, $date){
-        $query = $this->db->prepare("UPDATE juegos SET id=?,titulo=?,genero=?,id_distribuidora=?,precio=?,fecha_salida=? WHERE 1");
-        $query->execute([$id, $title, $genre, $distributor, $price, $date]);
+        $query = $this->db->prepare("UPDATE juegos SET id=?,titulo=?,genero=?,id_distribuidora=?,precio=?,fecha_salida=? WHERE id = ?");
+        $query->execute([$title, $genre, $distributor, $price, $date, $id]);
 
         return $query->fetch(PDO::FETCH_OBJ);
     }

@@ -42,6 +42,27 @@ class gamesController {
         $games = $this->model->getGames($page, $limit);
         return $this->view->response($games, 200);
     }
+    public function createGame($req,$res){
+        if($res->user == NULL){
+            return $this->view->response("No estas logueado", 404);
+        }
+        if(!isset($req->body->title) || !isset($req->body->genre) || !isset($req->body->genre) || !isset($req->body->genre) || !isset($req->body->genre)){
+            return $this->view->response('falta completar campos', 400);
+        }
+        $title = $req->body->title;
+        $genre = $req->body->genre;
+        $distributor = $req->body->distributor;
+        $price = $req->body->price;
+        $date = $req->body->date;
+
+        $game = $this->model->createGame($title, $genre, $distributor, $price, $date);
+
+        if(!$game){
+            $this->view->response('No se pudo crear el juego', 500);
+        }
+
+        $this->view->response($game, 200);
+    }
     public function updateGame($req, $res){
         $id = $req->params->id;
         $game = $this->model->getGameById($id);
@@ -49,6 +70,8 @@ class gamesController {
         if(!$game){
             return $this->view->response("El juego con el id= $id no existe", 404);
         }
+        $this->getGames($req, $res);
+
         if(!isset($req->body->title) || !isset($req->body->genre) || !isset($req->body->genre) || !isset($req->body->genre) || !isset($req->body->genre)){
             return $this->view->response('falta completar campos', 400);
         }
