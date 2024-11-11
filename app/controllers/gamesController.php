@@ -43,20 +43,17 @@ class gamesController {
         return $this->view->response($games, 200);
     }
     public function createGame($req,$res){
-        if($res->user == NULL){
-            return $this->view->response("No estas logueado", 404);
-        }
-        if(!isset($req->body->title) || !isset($req->body->genre) || !isset($req->body->genre) || !isset($req->body->genre) || !isset($req->body->genre)){
+        if(!isset($req->body->titulo) || !isset($req->body->genero) || !isset($req->body->id_distribuidora) || !isset($req->body->precio) || !isset($req->body->fecha_salida)){
             return $this->view->response('falta completar campos', 400);
         }
-        $title = $req->body->title;
-        $genre = $req->body->genre;
-        $distributor = $req->body->distributor;
-        $price = $req->body->price;
-        $date = $req->body->date;
+        $title = $req->body->titulo;
+        $genre = $req->body->genero;
+        $distributor = $req->body->id_distribuidora;
+        $price = $req->body->precio;
+        $date = $req->body->fecha_salida;
 
         $game = $this->model->createGame($title, $genre, $distributor, $price, $date);
-
+        var_dump($game);
         if(!$game){
             $this->view->response('No se pudo crear el juego', 500);
         }
@@ -70,17 +67,16 @@ class gamesController {
         if(!$game){
             return $this->view->response("El juego con el id= $id no existe", 404);
         }
-        $this->getGames($req, $res);
 
-        if(!isset($req->body->title) || !isset($req->body->genre) || !isset($req->body->genre) || !isset($req->body->genre) || !isset($req->body->genre)){
+        if(!isset($req->body->titulo) || !isset($req->body->genero) || !isset($req->body->id_distribuidora) || !isset($req->body->precio) || !isset($req->body->fecha_salida)){
             return $this->view->response('falta completar campos', 400);
         }
 
-        $title = $req->body->title;
-        $genre = $req->body->genre;
-        $distributor = $req->body->distributor;
-        $price = $req->body->price;
-        $date = $req->body->date;
+        $title = $req->body->titulo;
+        $genre = $req->body->genero;
+        $distributor = $req->body->id_distribuidora;
+        $price = $req->body->precio;
+        $date = $req->body->fecha_salida;
 
         $this->model->updateGame($id, $title, $genre, $distributor, $price, $date);
 
