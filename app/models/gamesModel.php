@@ -33,7 +33,8 @@ class gamesModel extends model {
     public function createGame($title, $genre, $distributor, $price, $date){
         $query = $this->db->prepare("INSERT INTO juegos(titulo, genero, id_distribuidora, precio, fecha_salida) VALUES (?, ?, ?, ?, ?)");
         $query->execute([$title, $genre, $distributor, $price, $date]);
-        return $query->fetch(PDO::FETCH_OBJ);
+        
+        return $this->db->lastInsertId();
     }
     public function updateGame($id, $title, $genre, $distributor, $price, $date){
         $query = $this->db->prepare("UPDATE juegos SET titulo=?,genero=?,id_distribuidora=?,precio=?,fecha_salida=? WHERE id = ?");
