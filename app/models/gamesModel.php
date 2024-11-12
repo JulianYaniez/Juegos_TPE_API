@@ -43,7 +43,7 @@ class gamesModel extends model {
         return $query->fetch(PDO::FETCH_OBJ);
     }
     public function deleteGame($id){
-        $query = $this->db->prepare("DELETE * FROM juegos WHERE id = ?");
+        $query = $this->db->prepare("DELETE FROM juegos WHERE id = ?");
         $query->execute([$id]);
 
         return $query->fetch(PDO::FETCH_OBJ);
