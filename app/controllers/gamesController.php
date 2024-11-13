@@ -13,35 +13,31 @@ class gamesController {
     }
 
     public function getGames($req, $res){
-        $page = null;
-        $limit = null;
-        
+        //Si no se definen las variables, se inicializan como default (null o ASC)
+        $page = $req->query->pagina ?? null;
+        $limit = $req->query->limite ?? null;
+        $sortBy = $req->query->ordenarPor ?? null;
+        $order = $req->query->orden ?? 'ASC';
+    
         if(isset($req->params->id)){
             $id = $req->params->id;
-
             $game = $this->model->getGameById($id);
-
+    
             if(!$game){
                 return $this->view->response("El juego con el id= $id no existe", 404);
             }
             return $this->view->response($game, 200);
         }
-        if(isset($req->query->criterios) || isset($req->query->valor)){
-            return $this->filter($req, $res);
+    
+        $games = $this->model->getGames($page, $limit, $sortBy, $order);
+    
+        if (!$games) {
+            return $this->view->response('No hay juegos disponibles', 404);
         }
-        if(isset($Req->query->pagina) || isset($req->query->limite)){
-            $page = $req->query->pagina;
-            $limit = $req->query->limite;
-            $games = $this->model->getGames($page, $limit);
-
-            if(!$games){
-                return $this->view->response('No hay juegos en la pagina y/o limite seleccionados', 404);
-            }
-            return $this->view->response($games, 200);
-        }
-        $games = $this->model->getGames($page, $limit);
+    
         return $this->view->response($games, 200);
     }
+    
     public function createGame($req,$res){
 
         if($res->user == NULL){
@@ -62,7 +58,7 @@ class gamesController {
         }
 
         $game = $this->model->getGameById($id);
-        $this->view->response($game, 200);
+        $this->view->response($game, 201);
     }
     public function updateGame($req, $res){
         if($res->user == NULL){

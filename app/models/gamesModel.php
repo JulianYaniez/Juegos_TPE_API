@@ -9,18 +9,26 @@ class gamesModel extends model {
         parent::__construct();
     }
 
-    public function getGames($page, $limit){
+    public function getGames($page, $limit, $sortBy = null, $order = 'ASC'){
+        $validColumns = ['titulo', 'genero', 'id_distribuidora', 'precio', 'fecha_salida'];
         $sql = "SELECT * FROM juegos";
-
-        if($limit != NULL){
+    
+        if ($sortBy && in_array($sortBy, $validColumns)) {
+            $sql .= " ORDER BY $sortBy " . ($order == 'DESC' ? 'DESC' : 'ASC');
+        }
+    
+        if ($limit != NULL) {
             $sql .= ' LIMIT ' . $limit;
         }
-        if($page != NULL){
-            $sql .= ' OFFSET ' . $page;
+        if ($page != NULL && $limit != NULL) {
+            $offset = ($page - 1) * $limit;
+            $sql .= ' OFFSET ' . $offset;
         }
+        
+    
         $query = $this->db->prepare($sql);
         $query->execute();
-
+    
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
     public function getGameById($id){
