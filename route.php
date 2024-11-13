@@ -1,6 +1,7 @@
 <?php
 
 require_once './app/controllers/gamesController.php';
+require_once './app/controllers/authController.php';
 
 require_once './libs/router.php';
 require_once './config/config.php';

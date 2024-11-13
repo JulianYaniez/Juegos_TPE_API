@@ -11,8 +11,7 @@ class authController {
         $this->view = new JSONView();
     }
 
-    public function getToken() {
-
+    public function getToken($req, $res) {
         $auth_header = $_SERVER('HTTP_AUTHORIZATION');
         $auth_header = explode(' ', $auth_header);
 
