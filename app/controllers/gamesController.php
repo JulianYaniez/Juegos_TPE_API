@@ -33,9 +33,9 @@ class gamesController {
             return $this->filter($req, $res);
         }
         if(!(isset($page) && $page <= 0) || !(isset($limit) && is_numeric($limit))){
-            return $this->view->response("Error en los valores de la paginacion y limite");
+            return $this->view->response("Error en los valores de la paginacion y limite", 400);
         }
-        
+
         $games = $this->model->getGames($page, $limit, $sortBy, $order);
     
         if (!$games) {
