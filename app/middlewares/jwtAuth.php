@@ -5,10 +5,10 @@ class JWTAuthMiddleware {
         $auth_header = $_SERVER['HTTP_AUTHORIZATION'];
         $auth_header = explode(' ', $auth_header);
         if(count($auth_header) != 2){
-            die();
+            return;
         }
         if($auth_header[0] != 'Bearer'){
-            die();
+            return;
         }
         $jwt = $auth_header[1];
         $res->user = validateJWT($jwt);

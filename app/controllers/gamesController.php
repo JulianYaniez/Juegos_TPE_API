@@ -45,7 +45,7 @@ class gamesController {
     public function createGame($req,$res){
 
         if($res->user == NULL){
-            $this->view->response('No estas logueado', 401);
+            return $this->view->response('No estas logueado', 401);
         }
         if(!isset($req->body->titulo) || !isset($req->body->genero) || !isset($req->body->id_distribuidora) || !isset($req->body->precio) || !isset($req->body->fecha_salida)){
             return $this->view->response('falta completar campos', 400);
@@ -66,7 +66,7 @@ class gamesController {
     }
     public function updateGame($req, $res){
         if($res->user == NULL){
-            $this->view->response('No estas logueado', 401);
+            return $this->view->response('No estas logueado', 401);
         }
         $id = $req->params->id;
         $game = $this->model->getGameById($id);
