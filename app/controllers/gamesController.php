@@ -13,9 +13,8 @@ class gamesController {
     }
 
     public function getGames($req, $res){
-        //Si no se definen las variables, se inicializan como default (null o ASC)
-        $page = $req->params->pagina ?? null;
-        $limit = $req->params->limite ?? null;
+        $page = $req->query->pagina ?? null;
+        $limit = $req->query->limite ?? null;
         $sortBy = $req->query->ordenarPor ?? null;
         $order = $req->query->orden ?? 'ASC';
     
@@ -32,7 +31,7 @@ class gamesController {
         if(isset($req->query->criterios) || (isset($req->query->valor) && is_numeric($valor))){
             return $this->filter($req, $res);
         }
-        if(!(isset($page) && $page <= 0) || !(isset($limit) && is_numeric($limit))){
+        if((isset($page) && $page <= 0) || (isset($limit) && $page <= 0)){
             return $this->view->response("Error en los valores de la paginacion y limite", 400);
         }
 

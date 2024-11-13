@@ -11,10 +11,12 @@ Esta API REST ofrece servicios relacionados con la gestión de una base de datos
 - **URL**: `/api/juegos`
 - **Descripción**: Devuelve una lista de todos los juegos disponibles.
 - **Query Params**:
-  - `ordenarPor` (opcional): Campo por el cual ordenar. Ejemplo: `titulo`, `precio`, `genero`.
+  - `ordenarPor` (opcional): Campo por el cual ordenar. `titulo`, `genero`, `id_distribuidora`, `precio`, `fecha_salida`.
   - `orden` (opcional): Orden (`ASC` o `DESC`). Por defecto: `ASC`.
   - `pagina` (opcional): Página de resultados. Debe ser un número entero arriba de 0.
   - `limite` (opcional): Cantidad de elementos a mostrar por página.
+  - `criterio`(opcional filtro): Campo por el cual filtrar, incompatible con queryParams anteriores. `distribuidora`.
+  - `valor` (opcional filtro): Valor para el criterio de filtro, compatible solo con el queryParam `criterio`. `mayor`, `menor`, `igual`.
 
 **Ejemplo**:
 GET /api/juegos?ordenarPor=titulo&orden=ASC&pagina=1&limite=10
@@ -45,6 +47,8 @@ GET /api/juegos/1
     "fecha_salida": "2024"
   }
 
+---
+
 ### **4. Modificar un Juego**
 - **Método**: PUT
 - **URL**: /api/juegos/{id}
@@ -59,7 +63,22 @@ GET /api/juegos/1
     "fecha_salida": "2015"
   }
 
-### **5. Filtrar Juegos**
+**Ejemplo**:
+PUT /api/juegos/1
+
+---
+
+### **5. Eliminar un Juego**
+- **Método**: DELETE
+- **URL**: /api/juegos/{id}
+- **Descripción**: Elimina un juego existente por su ID.
+
+**Ejemplo**:
+DELETE /api/juegos/1
+
+---
+
+### **6. Filtrar Juegos**
 - **Método**: GET
 - **URL**: /api/juegos?criterio={criterio}&valor={valor}
 - **Descripción**: Filtra los juegos según un criterio específico.
