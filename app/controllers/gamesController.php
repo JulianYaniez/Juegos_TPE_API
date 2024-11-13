@@ -28,6 +28,10 @@ class gamesController {
             }
             return $this->view->response($game, 200);
         }
+        
+        if(isset($req->query->criterios) || isset($req->query->valor)){
+            return $this->filter($req, $res);
+        }
     
         $games = $this->model->getGames($page, $limit, $sortBy, $order);
     
