@@ -9,7 +9,7 @@ class authModel extends model {
     }
 
     public function getUserByName($name) {
-        $query = $this->db->prepare("SELECT * FROM usuario WHERE nombre=?");
+        $query = $this->db->prepare("SELECT * FROM usuarios WHERE nombre=?");
         $query->execute([$name]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
