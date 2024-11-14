@@ -11,6 +11,7 @@ Nuestra API REST ofrece servicios relacionados con la gestión de una base de da
 - ('juegos/:id', 'DELETE', 'gamesController', 'deleteGame');
 - ('juegos', 'POST', 'gamesController', 'createGame');
 - ('juegos/:id', 'PUT', 'gamesController', 'updateGame');
+- ('usuarios/token', 'GET', 'authController', 'getToken');
 
 ### **1. Listar Todos los Juegos**
 - **Método**: `GET`
@@ -86,3 +87,24 @@ PUT /api/juegos/1
 
 **Ejemplo**:
 DELETE /api/juegos/1
+
+---
+
+ ### **6. Autenticacion de usuario**
+ - **Método**: GET
+ - **Autenticacion**: auth
+ - **Tipo**: basic/bearer
+ - **URL**: /api/usuarios/token
+ - **Descripcion**: 
+    Verifica los datos ingresados en la autenticacion de tipo basic, si son iguales a la base de datos 
+    Dara un token,donde se deberia de copiar (sin las comillas) y dirigirse a la autenticacion de tipo bearer y
+    Pegar el token.
+ -**Body**:
+ ```json
+ {
+  "Username": "webadmin",
+  "Password": "admin"
+ }
+
+ **Ejemplo**:
+ GET  /api/usuarios/token
