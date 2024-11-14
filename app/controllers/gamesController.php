@@ -31,7 +31,7 @@ class gamesController {
         if(isset($req->query->criterios) || (isset($req->query->valor) && is_numeric($req->query->valor))){
             return $this->filter($req, $res);
         }
-        if($page == null || $limit == null){
+        if(($page <= 0 && $page != NULL) || ($limit <= 0 && $limit != NULL)) {
             return $this->view->response("Error en los valores de la paginacion y limite", 400);
         }
 
