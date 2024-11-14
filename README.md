@@ -2,24 +2,32 @@
 
 ## Descripción General
 
-Esta API REST ofrece servicios relacionados con la gestión de una base de datos de juegos. Los endpoints permiten listar, agregar, modificar y filtrar juegos.
+Nuestra API REST ofrece servicios relacionados con la gestión de una base de datos de juegos. Los endpoints permiten listar, agregar, modificar y filtrar juegos.
 
 ***Endpoints Disponibles***
+
+- ('juegos', 'GET', 'gamesController', 'getGames');
+- ('juegos/:id', 'GET', 'gamesController', 'getGames');
+- ('juegos/:id', 'DELETE', 'gamesController', 'deleteGame');
+- ('juegos', 'POST', 'gamesController', 'createGame');
+- ('juegos/:id', 'PUT', 'gamesController', 'updateGame');
 
 ### **1. Listar Todos los Juegos**
 - **Método**: `GET`
 - **URL**: `/api/juegos`
 - **Descripción**: Devuelve una lista de todos los juegos disponibles.
 - **Query Params**:
-  - `ordenarPor` (opcional): Campo por el cual ordenar. `titulo`, `genero`, `id_distribuidora`, `precio`, `fecha_salida`.
+  - `ordenarPor` (opcional): Campo por el cual ordenar. Valores: `titulo`, `genero`, `id_distribuidora`, `precio`, `fecha_salida`.
   - `orden` (opcional): Orden (`ASC` o `DESC`). Por defecto: `ASC`.
   - `pagina` (opcional): Página de resultados. Debe ser un número entero arriba de 0.
-  - `limite` (opcional): Cantidad de elementos a mostrar por página.
-  - `criterio`(opcional filtro): Campo por el cual filtrar, incompatible con queryParams anteriores. `distribuidora`.
-  - `valor` (opcional filtro): Valor para el criterio de filtro, compatible solo con el queryParam `criterio`. `mayor`, `menor`, `igual`.
+  - `limite` (opcional): Cantidad de elementos a mostrar por página. Debe ser un número entero arriba de 0.
+  - `criterio`(opcional filtro): Criterio por el cual filtrar, incompatible con queryParams anteriores. Valores:`distribuidora` y precio(`mayor`, `menor`, `igual`).
+  - `valor` (opcional filtro): Valor para el criterio de filtro, compatible solo con el queryParam `criterio`.
 
-**Ejemplo**:
-GET /api/juegos?ordenarPor=titulo&orden=ASC&pagina=1&limite=10
+**Ejemplos**:
+GET /api/juegos?ordenarPor=titulo&orden=ASC&pagina=1&limite=2
+GET /api/juegos?criterio=distribuidora&valor=1
+GET /api/juegos?criterio=mayor&valor=25
 
 ---
 
@@ -46,6 +54,9 @@ GET /api/juegos/1
     "precio": 29.99,
     "fecha_salida": "2024"
   }
+
+**Ejemplo**:
+POST /api/juegos
 
 ---
 
@@ -75,15 +86,3 @@ PUT /api/juegos/1
 
 **Ejemplo**:
 DELETE /api/juegos/1
-
----
-
-### **6. Filtrar Juegos**
-- **Método**: GET
-- **URL**: /api/juegos?criterio={criterio}&valor={valor}
-- **Descripción**: Filtra los juegos según un criterio específico.
-- **Query Params**:
-  - `criterio`: Campo por el cual filtrar (ejemplo: genero).
-  - `valor`: Valor para el criterio de filtro.
-**Ejemplo**:
-GET /api/juegos?criterio=genero&valor=Accion
