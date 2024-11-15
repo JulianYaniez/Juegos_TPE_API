@@ -2,14 +2,18 @@
 
 require_once './app/models/gamesModel.php';
 require_once './app/views/JSONView.php';
+require_once './app/models/distributorsModel.php';
+
 
 class gamesController {
     private $model;
     private $view;
+    private $modelD;
 
     public function __construct(){
         $this->model = new gamesModel();
         $this->view = new JSONView();
+        $this->modelD = new distributorsModel();
     }
 
     public function getGames($req, $res){
@@ -58,6 +62,10 @@ class gamesController {
         $price = $req->body->precio;
         $date = $req->body->fecha_salida;
 
+        if(!$this->modelD->getDistributorById($distributor)){
+            return $this->view->response('El distribuidor con el id= ' . $distributor . ' no existe', 404);
+        }
+
         $id = $this->model->createGame($title, $genre, $distributor, $price, $date);
         if(!$id){
             $this->view->response('No se pudo crear el juego', 500);
@@ -87,6 +95,10 @@ class gamesController {
         $price = $req->body->precio;
         $date = $req->body->fecha_salida;
 
+        if(!$this->modelD->getDistributorById($distributor)){
+            return $this->view->response('El distribuidor con el id= ' . $distributor . ' no existe', 404);
+        }
+
         $this->model->updateGame($id, $title, $genre, $distributor, $price, $date);
 
         $game = $this->model->getGameById($id);
@@ -104,6 +116,7 @@ class gamesController {
         if(!$game){
             return $this->view->response("El juego con el id= $id no existe", 404);
         }
+        $this->view->response("El juego con el id= $id ha sido eliminado", 200);
         return $this->model->deleteGame($id);
     }
     public function filter($req, $res) {

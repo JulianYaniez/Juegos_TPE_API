@@ -99,12 +99,12 @@ DELETE /api/juegos/1
     Verifica los datos ingresados en la autenticacion de tipo basic, si son iguales a la base de datos 
     Dara un token,donde se deberia de copiar (sin las comillas) y dirigirse a la autenticacion de tipo bearer y
     Pegar el token.
- -**Body**:
- ```json
- {
+ - **Body**:
+  ```json
+  {
   "Username": "webadmin",
   "Password": "admin"
- }
+  }
 
- **Ejemplo**:
- GET  /api/usuarios/token
+**Ejemplo**:
+GET /api/usuarios/token
